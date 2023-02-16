@@ -11,51 +11,73 @@
 // the function return number of char not includ '\n'!!!
 int getLine(char s[]){
 
-    int count = 0;
+    int i = 0;
     
 
-    for (int i = 0; i < LINE; i++)
+    for (i ; i < LINE; i++)
     {
-        scanf("%c" , &(*(s+i)));
-        count = i;
+        
+        if (scanf("%c" , &(*(s+i)))!=1)
+        {
+            return i;
+        }
+        
+    
         if (*(s+i) == '\n' || *(s+i) == '\0' )
         {
             break;
         }
     }
     
-    return count;
+    return i-1;
 
 }
 
 int getword(char w[])
 {
-	int count = 0;
-	
-	for (int i = 0; i < WORD; i++)
-	{
-		if (*(w+i) == '\n' || *(w + i) == '\t' || *(w + i) == ' ' || *(w + i) == '\0')
-			break;
+    char c = ' ';
+    int i = 0;
 
-		count++;
-	}
+    if (scanf("%c", &c)!=1)
+    {
+        return i;
+    }
+    
 
-	return count;
+    do
+    {
+        w[i] = c;
+        i++;
+    } while (scanf("%c", &c) && c != '\n' && c != '\t' && c != ' ' && c != '\0' && c != ' ');
+    
+ 
+    w[i] = '\0';
+    
+   
+
+	return i;
 }
 
 
 int substring( char * str1, char * str2){
-    if (strlen(str1) > strlen(str2)){
-        if(strstr(str1, str2) != NULL){
+    int i = strlen(str1);
+    int j = strlen(str2);
+    
+    if (i > j)
+    {
+        char *res;
+        res = strstr(str1, str2);
+        if(res != NULL)
+        {
             return 1;
         }
-        
+
     }
     else
     {
         return 0;
     }
-    
+    return 0;
 
 }
 
@@ -85,6 +107,11 @@ int similar (char *s, char *t, int n){
 
 
     char new[strlen(t)];
+    for (int i = 0; i < (int)strlen(t); i++)
+    {
+        new[i] = '0';
+    }
+    
     int index = 0;
     for (int i = 0; i < one; i++)
     {
@@ -113,11 +140,17 @@ int similar (char *s, char *t, int n){
 void print_lines(char* str)
 {
 	char line[LINE] = {0};
+    
+    int i = 0;
 
-	while (getLine(line) != 0)
+	while (i < getLine(line))
 	{
-		if (substring(line, str) != 0)
-			printf("%s\n", line);
+        int num = substring(line, str);
+
+        if (num != 0)
+        {
+          printf("%s", line);
+        }		
 	}
 }
 
@@ -125,13 +158,19 @@ void print_lines(char* str)
 void print_similar_words(char* str)
 {
 	char word[WORD] = {0};
-
-	while (getword(word) != 0)
+    int i = 0;
+    int j = strlen(str);
+    int num = 0;
+	while (i = getword(word))
 	{
-		if (similar(word, str, 1) || similar(word, str, 0))
+         num = i-j;
+        if ((num)>=0)
 		{
+            if (similar(word, str, num))
+		    {
 			printf("%s\n", word);
-		}
+		    }
+        }
 	}
 
 }
@@ -142,10 +181,15 @@ void print_similar_words(char* str)
 int main()
 {
 	char word[WORD];
-	char choose;
+
+    
+	char choose = ' ';
 
 	getword(word);
-	scanf(" %c\n", &choose);
+
+
+	scanf("%c\n", &choose);
+
 
 	if (choose == 'a')
 	{

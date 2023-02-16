@@ -44,6 +44,10 @@ int main(int argc, char const *argv[])
 {
     int arr[ARRSIZE] = { 0 };
 
+    for (int i = 0; i < ARRSIZE; i++)
+    {
+      scanf(" %d", (arr + i));
+    }
    
     insertion_sort(arr, ARRSIZE);
 

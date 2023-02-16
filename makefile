@@ -1,5 +1,3 @@
-FLAG = -Wall -g
-CC = gcc
 
 
 
@@ -8,10 +6,10 @@ CC = gcc
 all: isort txtfind
 
 isort: isort.c
-	gcc FLAG-o isort isort.c
+	$(CC) $(FLAGS) isort.c -o isort -lm
 
 txtfind: txtfind.c
-	gcc FLAG -o txtfind txtfind.c
+	$(CC) $(FLAGS)txtfind.c -o txtfind -lm
 
 clean:
 	rm -f *.o txtfind isort
